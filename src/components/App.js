@@ -55,18 +55,45 @@ function App() {
     repos: null,
   });
 
+  const [curveState, setCurveState] = useState({
+    susdApy: null,
+    poolApy: null, 
+    susdVolume: null,
+    poolVolume: null,  
+    
+  });
+
+
   useEffect(() => {
     setAppState({ loading: true });
     const apiUrl = `https://cors-anywhere.herokuapp.com/https://api.vesper.finance/pools?stages=prod`;
+    
     
     fetch(apiUrl)
       .then((res) => res.json())
       .then((repos) => {
         setAppState({ loading: false, repos: repos });
       });
-
+     
   }, [setAppState]);
+  
+  useEffect(() => {
+    const curveURL = `https://stats.curve.fi/raw-stats/apys.json`;
 
+    fetch(curveURL)
+    .then((response) => response.json())
+    .then((curveData) => {
+      setCurveState({ 
+        susdApy: curveData.apy.day.susd, 
+        poolApy: curveData.apy.day["3pool"],
+
+        susdVolume: curveData.volume.susd, 
+        poolVolume: curveData.volume["3pool"]
+      });
+      console.log(curveData)
+    });
+
+  }, [setCurveState]);
 
 
   
@@ -148,6 +175,20 @@ function App() {
         </div>
         <div className='repo-container'>
           <ListLoading isLoading={appState.loading} repos={appState.repos} />
+        </div>
+      </div>
+
+      <div className='App'>
+        <div className='container'>
+        </div>
+        <div className='repo-container'>
+            <h2>Curve.Fi</h2>
+            <ul>
+              <li><b>Base Apy (sUSD):</b> {Number((curveState.susdApy*100).toFixed(2))} | 
+              <b>Volume (sUSD):</b> {curveState.susdVolume}</li>
+              <li><b>Base Apy (3pool):</b> {Number((curveState.poolApy*100).toFixed(2))}|
+              <b>Volume (3pool):</b> {curveState.poolVolume}</li>
+            </ul>
         </div>
       </div>
     </div>
