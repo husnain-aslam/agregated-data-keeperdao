@@ -58,7 +58,6 @@ function App() {
   useEffect(() => {
     setAppState({ loading: true });
     const apiUrl = `https://cors-anywhere.herokuapp.com/https://api.vesper.finance/pools?stages=prod`;
-    const apiUrl2 = `https://stablecoinstats.com/api/range/2021-05-05/2021-06-01/DAI`;
     
     fetch(apiUrl)
       .then((res) => res.json())
@@ -66,11 +65,6 @@ function App() {
         setAppState({ loading: false, repos: repos });
       });
 
-      fetch(apiUrl2)
-      .then((res) => res.json())
-      .then((history) => {
-        setAppState({ loading: false, history: history });
-      });
   }, [setAppState]);
 
 
@@ -154,14 +148,6 @@ function App() {
         </div>
         <div className='repo-container'>
           <ListLoading isLoading={appState.loading} repos={appState.repos} />
-        </div>
-      </div>
-
-      <div className='App'>
-        <div className='container'>
-        </div>
-        <div className='repo-container'>
-          <ListLoading isLoading={appState.loading} repos={appState.history} />
         </div>
       </div>
     </div>
