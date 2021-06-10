@@ -23,6 +23,10 @@ const List = (props) => {
             2 day: <span className='repo-description'>{repo.earningRates["2"]} </span> | 
             7 day: <span className='repo-description'>{repo.earningRates["7"]} </span> |
             30 day: <span className='repo-description'>{repo.earningRates["30"]} </span><br/> 
+            <b>VSP Delta Rates:</b> 1 day: <span className='repo-description'>{repo.vspDeltaRates["1"]} </span> |
+            2 day: <span className='repo-description'>{repo.vspDeltaRates["2"]} </span> | 
+            7 day: <span className='repo-description'>{repo.vspDeltaRates["7"]} </span> |
+            30 day: <span className='repo-description'>{repo.vspDeltaRates["30"]} </span><br/> 
             <b>Interest Fee:</b> <span className='repo-description'>{repo.interestFee}</span> <br/>
           </li>
         );
